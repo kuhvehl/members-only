@@ -15,6 +15,18 @@ const sessionStore = new SequelizeStore({
   db: sequelize,
 });
 
+const sessionSecret = process.env.SESSION_SECRET;
+
+app.use(
+  session({
+    secret: sessionSecret,
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: process.env.NODE_ENV === "production" },
+  })
+);
+
 // Session middleware
 app.use(
   session({

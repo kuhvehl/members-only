@@ -4,6 +4,8 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const { isAuthenticated } = require("../middleware/auth");
+const secretPasscode = process.env.SECRET_PASSCODE;
+const adminPasscode = process.env.ADMIN_PASSCODE;
 
 router.get("/signup", (req, res) => {
   res.render("signup");
@@ -103,8 +105,6 @@ router.get("/join-club", isAuthenticated, (req, res) => {
 });
 
 router.post("/join-club", isAuthenticated, async (req, res) => {
-  const secretPasscode = "secretpasscode"; // In a real app, store this securely
-
   if (req.body.passcode === secretPasscode) {
     try {
       await User.update(
@@ -128,8 +128,6 @@ router.get("/become-admin", isAuthenticated, (req, res) => {
 });
 
 router.post("/become-admin", isAuthenticated, async (req, res) => {
-  const adminPasscode = "adminpasscode"; // In a real app, store this securely
-
   if (req.body.adminPasscode === adminPasscode) {
     try {
       await User.update(
