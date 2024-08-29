@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Become an Admin</title>
+  </head>
+  <body>
+    <h1>Become an Admin</h1>
+    <% if (typeof error !== 'undefined') { %>
+    <p style="color: red"><%= error %></p>
+    <% } %>
+    <form action="/auth/become-admin" method="POST">
+      <label for="adminPasscode">Enter the admin passcode:</label>
+      <input
+        type="password"
+        id="adminPasscode"
+        name="adminPasscode"
+        required
+      /><br /><br />
+
+      <input type="submit" value="Become Admin" />
+    </form>
+    <a href="/">Back to Home</a>
+  </body>
+</html>

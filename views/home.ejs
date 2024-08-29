@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Members Only</title>
+  </head>
+  <body>
+    <h1>Welcome to Members Only</h1>
+
+    <% if (user) { %>
+    <p>You are logged in as <%= user.firstName %> <%= user.lastName %>.</p>
+    <% if (!user.isMember) { %>
+    <a href="/auth/join-club">Join the Club</a>
+    <% } else { %>
+    <p>You are a club member!</p>
+    <% } %> <% if (!user.isAdmin) { %>
+    <a href="/auth/become-admin">Become an Admin</a>
+    <% } else { %>
+    <p>You are an admin!</p>
+    <% } %>
+    <a href="/auth/logout">Logout</a>
+
+    <h2>Submit a Message</h2>
+    <form action="/submit-message" method="POST">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" required /><br /><br />
+
+      <label for="text">Message:</label>
+      <textarea id="text" name="text" required></textarea><br /><br />
+
+      <input type="submit" value="Submit Message" />
+    </form>
+    <% } else { %>
+    <p>You are not logged in.</p>
+    <a href="/auth/login">Login</a>
+    <a href="/auth/signup">Sign Up</a>
+    <% } %>
+
+    <h2>Messages</h2>
+    <% messages.forEach(message => { %>
+    <div>
+      <h3><%= message.title %></h3>
+      <p><%= message.text %></p>
+      <% if (user && user.isMember) { %>
+      <p>
+        Posted by: <%= message.author.firstName %> <%= message.author.lastName
+        %>
+      </p>
+      <p>Date: <%= message.createdAt.toLocaleString() %></p>
+      <% } %> <% if (user && user.isAdmin) { %>
+      <form action="/delete-message" method="POST" style="display: inline">
+        <input type="hidden" name="messageId" value="<%= message.id %>" />
+        <input type="submit" value="Delete Message" />
+      </form>
+      <% } %>
+    </div>
+    <% }); %>
+  </body>
+</html>

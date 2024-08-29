@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Join the Club</title>
+  </head>
+  <body>
+    <h1>Join the Club</h1>
+    <% if (typeof error !== 'undefined') { %>
+    <p style="color: red"><%= error %></p>
+    <% } %>
+    <form action="/auth/join-club" method="POST">
+      <label for="passcode">Enter the secret passcode:</label>
+      <input
+        type="password"
+        id="passcode"
+        name="passcode"
+        required
+      /><br /><br />
+
+      <input type="submit" value="Join Club" />
+    </form>
+    <a href="/">Back to Home</a>
+  </body>
+</html>
